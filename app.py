@@ -12,7 +12,6 @@ brasilia_tz = pytz.timezone('America/Sao_Paulo')
 
 # Obtendo o horário atual no fuso horário de Brasília
 horario_br = datetime.now(brasilia_tz).strftime("%d/%m/%Y %H:%M:%S")
-
 # Função para conectar ao PostgreSQL usando URI de Conexão
 def conectar_db():
     # URI de Conexão do PostgreSQL
@@ -79,7 +78,7 @@ def requerir(nome):
 @app.route('/registrar_entrada', methods=['POST'])  
 def registrar_entrada():
     nome = request.form['nome']
-    horario = datetime.now().strftime("%D  %H:%M:%S")
+    horario = datetime.now(brasilia_tz).strftime("%D  %H:%M:%S")
 
     # Verifica se já existe um registro de entrada sem saída
     conn = conectar_db()
@@ -97,7 +96,7 @@ def registrar_entrada():
 @app.route('/registrar_saida', methods=['POST'])
 def registrar_saida():
     nome = request.form['nome']
-    horario = datetime.now().strftime("%D  %H:%M:%S")
+    horario = datetime.now(brasilia_tz).strftime("%D  %H:%M:%S")
 
     # Atualiza o registro de saída
     conn = conectar_db()
@@ -111,3 +110,6 @@ def registrar_saida():
     conn.close()
     print(lregistros)
     return redirect(url_for('index'))
+
+if __name__ == '__main__':
+    app.run(debug=True)
