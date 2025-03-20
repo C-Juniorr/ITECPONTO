@@ -71,8 +71,12 @@ def requerir(nome):
             registroreturn.append(registro)
 
     # Filtra pelo nome, se necessário
-    registroreturn = [registro for registro in registroreturn if registro['nome'] == nome]  # 'nome' está na posição 1
+    def normalizar(texto):
+        return unicodedata.normalize('NFC', texto).strip().lower()
 
+    registroreturn = [
+        registro for registro in registroreturn if normalizar(registro['nome']) == normalizar(nome)
+    ]
     return jsonify(registroreturn)
 
 @app.route('/registrar_entrada', methods=['POST'])  
