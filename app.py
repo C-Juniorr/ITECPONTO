@@ -6,7 +6,6 @@ import psycopg2
 import os
 import psycopg2.extras
 import unicodedata
-
 app = Flask(__name__)
 
 # Definindo o fuso horário de Brasília (BRT - Brasilia Time)
@@ -48,6 +47,7 @@ def lregistros():
     cur.execute("SELECT * FROM folhaponto")
     registros = cur.fetchall()
     conn.close()
+    print(registros)
     return registros
 
 # Função para salvar os registros em um arquivo JSON
@@ -72,7 +72,6 @@ def requerir(nome):
         if registro["saida"] is not None:  # A coluna 'saida' está na posição 2
             registroreturn.append(registro)
 
-    # Filtra pelo nome, se necessário
     def normalizar(texto):
         return unicodedata.normalize('NFC', texto).strip().lower()
 
