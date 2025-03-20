@@ -5,6 +5,8 @@ import pytz
 import psycopg2
 import os
 import psycopg2.extras
+import unicodedata
+
 app = Flask(__name__)
 
 # Definindo o fuso horário de Brasília (BRT - Brasilia Time)
