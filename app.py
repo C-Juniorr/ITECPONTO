@@ -44,7 +44,8 @@ criar_tabela()
 def lregistros():
     conn = conectar_db()
     cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)  # Usando RealDictCursor
-    cur.execute("SELECT * FROM folhaponto")
+    #cur.execute("SELECT * FROM folhaponto")
+    cur.execute("SELECT * FROM folhaponto WHERE saida IS NULL")
     registros = cur.fetchall()
     conn.close()
     print(registros)
