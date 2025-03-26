@@ -6,7 +6,10 @@ import psycopg2
 import os
 import psycopg2.extras
 import unicodedata
+from dotenv import load_dotenv
+
 app = Flask(__name__)
+load_dotenv()
 
 # Definindo o fuso horário de Brasília (BRT - Brasilia Time)
 brasilia_tz = pytz.timezone('America/Sao_Paulo')
@@ -16,7 +19,8 @@ horario_br = datetime.now(brasilia_tz).strftime("%d/%m/%Y %H:%M:%S")
 # Função para conectar ao PostgreSQL usando URI de Conexão
 def conectar_db():
     # URI de Conexão do PostgreSQL
-    DATABASE_URL = os.environ.get('DATABASE_URL', 'postgresql://postgres:etrm7kirRbmCKAGh@maliciously-factual-longspur.data-1.use1.tembo.io:5432/postgres')
+    db_url = os.getenv('DBURL')
+    DATABASE_URL = os.environ.get('DATABASE_URL', db_url)
     
     # Conexão com o PostgreSQL
     conn = psycopg2.connect(DATABASE_URL)
